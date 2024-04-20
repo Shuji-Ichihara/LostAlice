@@ -9,6 +9,13 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+LostAlice/[Ll]ibrary/
+LostAlice/[Tt]emp/
+LostAlice/[Oo]bj/
+LostAlice/[Bb]uild/
+LostAlice/[Bb]uilds/
+LostAlice/[Ll]ogs/
+LostAlice/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -70,3 +77,4 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+LostAlice/.vsconfig
