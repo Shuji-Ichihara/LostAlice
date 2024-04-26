@@ -51,7 +51,6 @@ public class Book : MonoBehaviour
         }
         
         await AnimationWait();
-        Debug.Log("NextPageInit");
     }
 
     [ContextMenu("NextPageWait")]
@@ -63,7 +62,6 @@ public class Book : MonoBehaviour
         _animator.SetFloat(_waitSpeed, 1/WaitTime);
         _animator.SetTrigger(_nNextWait);
         await AnimationWait();
-        Debug.Log("NextPageWait");
 
     }
 
@@ -75,7 +73,6 @@ public class Book : MonoBehaviour
 
         _animator.SetTrigger(_nextEnd);
         await AnimationWait();
-        Debug.Log("NextPageEnd");
 
         foreach (var page in _pages)
         {
