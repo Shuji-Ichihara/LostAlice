@@ -8,25 +8,51 @@ public class PlayerMove : MonoBehaviour
     private float _playerSpeed = 5f;
 
     [SerializeField]
-    private float _playerStop = 0f;
+    private float _playerJunp = 10f;
 
     private Rigidbody _rb;
+
+    [SerializeField]
+    private Animator _anim;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _anim = GetComponent<Animator>();
     }
 
     void Update()
     {
+        // プレイヤーの移動処理
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        Vector3 forward = Camera.main.transform.forward;
+        Vector3 right = Camera.main.transform.right;
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
 
-        if (movement.magnitude > _playerStop)
+        Vector3 movement = (forward * verticalInput + right * horizontalInput) * _playerSpeed * Time.deltaTime;
+
+        transform.Translate(movement);
+
+        // アニメーション処理
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {     
+            _anim.SetBool("Walk",true);
+        }
+        else
         {
-            transform.Translate(movement * _playerSpeed * Time.deltaTime);
+            _anim.SetBool("Walk", false);
+        }
+
+        // ジャンプ
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            _anim.SetTrigger("Junp");
+            _rb.AddForce(Vector3.up * _playerJunp, ForceMode.Impulse);
         }
        
     }
