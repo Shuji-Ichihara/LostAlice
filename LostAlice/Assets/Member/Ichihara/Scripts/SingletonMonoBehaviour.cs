@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
@@ -15,7 +15,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
                 if(_instance == null)
                 {
 #if UNITY_EDITOR
-                    Debug.LogError($"{t}‚ğƒAƒ^ƒbƒ`‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚Í‚ ‚è‚Ü‚¹‚ñB");
+                    Debug.LogError($"{t}ã‚’ã‚¢ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ã‚ã‚Šã¾ã›ã‚“ã€‚");
 #endif
                 }
             }
@@ -24,18 +24,18 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     }
 
     /// <summary>
-    /// Œp³æ‚ÌƒNƒ‰ƒX‚©‚ç base.Awake ‚ÅŒÄ‚Ño‚·
+    /// ç¶™æ‰¿å…ˆã®ã‚¯ãƒ©ã‚¹ã‹ã‚‰ base.Awake ã§å‘¼ã³å‡ºã™
     /// </summary>
     protected void Awake()
-    {// ‘¼‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÉƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚é‚©‚ğ’²‚×‚éB
-        // ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éê‡‚Í”jŠü‚·‚éB
+    {// ä»–ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ã‹ã‚’èª¿ã¹ã‚‹ã€‚
+        // ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ç ´æ£„ã™ã‚‹ã€‚
         if (this != Instance)
         {
             Destroy(this);
 #if UNITY_EDITOR
             Debug.LogWarning(
-                $"{typeof(T)} ‚ÍŠù‚É‘¼‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÉƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éˆ×AƒRƒ“ƒ|[ƒlƒ“ƒg‚ğ”jŠü‚µ‚Ü‚µ‚½B" +
-                $"Œ»İƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ÍA{Instance.gameObject.name} ‚Å‚·B");
+                $"{typeof(T)} ã¯æ—¢ã«ä»–ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ç‚ºã€ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’ç ´æ£„ã—ã¾ã—ãŸã€‚" +
+                $"ç¾åœ¨ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ã€{Instance.gameObject.name} ã§ã™ã€‚");
 #endif
             return;
         }
