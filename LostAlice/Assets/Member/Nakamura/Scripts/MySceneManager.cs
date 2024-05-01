@@ -31,7 +31,7 @@ public class SerializableDictionary<TKey, TValue>
 
 public class MySceneManager : MonoBehaviour
 {
-    private MySceneManager Instance;
+    private static MySceneManager Instance;
 
     [SerializeField,Header("SceneのタイプとSceneの指定※BuildSetting必須")]
     private SerializableDictionary<SceneType, SceneAsset>[] _loadSceneKeyPair;
@@ -51,10 +51,7 @@ public class MySceneManager : MonoBehaviour
                 // _loadSceneKeyPairの配列の数だけ_loadScenesに
                 for (int i = 0; i < _loadSceneKeyPair.Length; i++)
                 {
-                    Debug.Log($"{_loadSceneKeyPair.Length}");
                     _loadScenes.Add(_loadSceneKeyPair[i].Key, _loadSceneKeyPair[i].Value.name);
-                    Debug.Log($"SceneType:{_loadSceneKeyPair[i].Key},SceneName:{_loadSceneKeyPair[i].Value}");
-
                 }
                 _settingScene = true;
             }
@@ -63,17 +60,7 @@ public class MySceneManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-
-
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
 
     // Update is called once per frame
     void Update()
@@ -88,6 +75,10 @@ public class MySceneManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// シーン移動するようの関数
+    /// </summary>
+    /// <param name="sceneType">シーンのタイプ</param>
     private void ChangeScene(SceneType sceneType)
     {
         if (_loadScenes[sceneType] != SceneManager.GetActiveScene().name)
