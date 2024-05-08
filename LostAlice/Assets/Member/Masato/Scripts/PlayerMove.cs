@@ -15,6 +15,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private Animator _anim;
 
+    //x軸方向の入力を保存
+    private float _input_x;
+    //z軸方向の入力を保存
+    private float _input_z;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -23,20 +28,26 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        // プレイヤーの移動処理
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        // x軸方向、z軸方向の入力を取得
+        //Horizontal、水平、横方向のイメージ
+        _input_x = Input.GetAxis("Horizontal");
+        //Vertical、垂直、縦方向のイメージ
+        _input_z = Input.GetAxis("Vertical");
 
-        Vector3 forward = Camera.main.transform.forward;
-        Vector3 right = Camera.main.transform.right;
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
+        //移動の向きなど座標関連はVector3で扱う
+        Vector3 velocity = new Vector3(_input_x, 0, _input_z);
+        //ベクトルの向きを取得
+        Vector3 direction = velocity.normalized;
 
-        Vector3 movement = (forward * verticalInput + right * horizontalInput) * _playerSpeed * Time.deltaTime;
+        //移動距離を計算
+        float distance = _playerSpeed * Time.deltaTime;
+        //移動先を計算
+        Vector3 destination = transform.position + direction * distance;
 
-        transform.Translate(movement);
+        //移動先に向けて回転
+        transform.LookAt(destination);
+        //移動先の座標を設定
+        transform.position = destination;
 
         // アニメーション処理
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
