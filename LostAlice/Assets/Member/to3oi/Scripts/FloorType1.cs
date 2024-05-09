@@ -8,11 +8,18 @@ public class FloorType1 : MonoBehaviour
 
     public Transform _pageTransform;
 
-    private void Start()
+    [SerializeField]
+    private GameObject[] _activeFalseObjects;
+    private void Awake()
     {
         foreach (var tile in _tiles)
         {
             tile.GetEndTransform().parent = _pageTransform;
+        }
+
+        foreach (var obj in _activeFalseObjects)
+        {
+            obj.SetActive(false);
         }
     }
 

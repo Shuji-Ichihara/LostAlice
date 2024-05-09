@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 1736600167477596258}
   - component: {fileID: 2008817753698900148}
   m_Layer: 0
-  m_Name: old_Floor
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,6 +228,10 @@ MonoBehaviour:
     _boneEnd: {fileID: 7913413566170156803}
     _floor: {fileID: 261924680086254338}
     _endTile: 1
+  _pageTransform: {fileID: 0}
+  _activeFalseObjects:
+  - {fileID: 8769207050103085939}
+  - {fileID: 1913192220449390309}
 --- !u!1 &8769207050103085939
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 public class StageAnimationManager : MonoBehaviour
@@ -37,29 +35,27 @@ public class StageAnimationManager : MonoBehaviour
         
         await UniTask.Delay(TimeSpan.FromSeconds(3));
         await _book.BookOpen();
-        await next();
+        
+
+        for (int i = 0; i < 3; i++)
+        {
+            await next();
+        }
+        await UniTask.Delay(TimeSpan.FromSeconds(1));
+
+        //本を閉じる
+        await _book.CloseAnimation();
     }
 
     [ContextMenu("next")]
     public async UniTask next()
     {
+        Debug.Log("init");
         await _book.NextPageInit();
+        Debug.Log("wait");
         await _book.NextPageWait();
-        
-        List<UniTask> tasks = new List<UniTask>();  
-        tasks.Add(_book.NextPageEnd());
-        /*
-        tasks.Add(
-             Task.Run(() =>
-            {
-                foreach (var floorType1 in _stageInfos[0].FloorType1s)
-                {
-                    floorType1.gameObject.SetActive(false);
-                }
-            }).AsUniTask());
-            */
-
-        await tasks;
+        Debug.Log("end");
+        await _book.NextPageEnd();
     }
 }
 
