@@ -67,4 +67,12 @@ public class PlayerMove : MonoBehaviour
         }
        
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Trap")
+        {
+            Debug.Log("aaa");
+            Destroy(this.gameObject);
+        }
+    }
 }
