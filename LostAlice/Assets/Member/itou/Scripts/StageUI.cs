@@ -9,6 +9,9 @@ public class StageUI : MonoBehaviour
     private Text _nowStage;
     [SerializeField]
     private Text _WallTime;
+    // ŽsŒ´’Ç‹L
+    [SerializeField]
+    private Book bookScript = null;
     private int _stageCount;
     public bool _goal;
     public bool _times;

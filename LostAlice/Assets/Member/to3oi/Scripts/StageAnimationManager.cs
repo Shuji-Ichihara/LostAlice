@@ -10,7 +10,7 @@ public class StageAnimationManager : MonoBehaviour
     {
         get
         {
-            if(Instance == null)
+            if (Instance == null)
             {
                 var obj = new GameObject("StageAnimationManager");
                 Instance = obj.AddComponent<StageAnimationManager>();
@@ -19,25 +19,32 @@ public class StageAnimationManager : MonoBehaviour
         }
         private set => Instance = value;
     }
-    
+
     [SerializeField]
-    private  Book _book;
-    
+    private Book _book;
+
     [SerializeField]
     private float _waitTime = 15.0f;
-    
+
     [SerializeField]
     private List<StageInfo> _stageInfos = new List<StageInfo>();
 
     async void Start()
     {
         _book.WaitTime = _waitTime;
-        
+
         await UniTask.Delay(TimeSpan.FromSeconds(3));
         await _book.BookOpen();
-        
 
-        for (int i = 0; i < 3; i++)
+        // 市原追記
+        GameSceneManager.Instance.PlayerSpawn();
+
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    await next();
+        //}
+        // 市原追記
+        for (int i = 0; i < GameSceneManager.Instance.GameStageMax; i++)
         {
             await next();
         }

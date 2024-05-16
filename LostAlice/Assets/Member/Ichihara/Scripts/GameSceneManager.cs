@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class GameSceneManager : SingletonMonoBehaviour<GameSceneManager>
 {
+    [SerializeField]
+    private Transform _spawnPlayerPoint = null;
+    [SerializeField]
+    private GameObject _playerObject = null;
+
     // 本のページが垂直である秒数
     [SerializeField]
     private float _pageTopTimeCount = 0f;
+    // ステージの総数
     [SerializeField]
     private int _gameStageMax = 5;
+    public int GameStageMax => _gameStageMax;
     // 現在のステージのカウント
     private int _gameStageCount = 1;
     public int GameStageCount => _gameStageCount;
@@ -31,11 +38,11 @@ public class GameSceneManager : SingletonMonoBehaviour<GameSceneManager>
     // Update is called once per frame
     void Update()
     {
-
         //if(/*ステージをクリアした状態を取得*/)
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ClearStage();
+            Debug.Log(_gameStageCount);
         }
         // 全てのステージをクリアしたら、ゲーム終了フラグを true にする
         if (_gameStageCount < _gameStageMax)
@@ -62,5 +69,14 @@ public class GameSceneManager : SingletonMonoBehaviour<GameSceneManager>
     public void PageTopCount()
     {
         _pageTopTimeCount -= Time.deltaTime;
+    }
+
+    /// <summary>
+    /// プレイヤーを生成する
+    /// </summary>
+    public void PlayerSpawn()
+    {
+        Instantiate(_playerObject, _spawnPlayerPoint.position, Quaternion.identity);
+        _isStartedGame = true;
     }
 }
