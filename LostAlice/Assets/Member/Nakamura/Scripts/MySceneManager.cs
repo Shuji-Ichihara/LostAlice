@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
 
 /// <summary>
@@ -14,15 +14,17 @@ public enum SceneType
 {
     Title,
     GameScene,
-    EndScene
+    EndScene,
+    // 市原追記
+    GameOver,
 }
 
 [Serializable]
 public class SerializableDictionary<TKey, TValue>
 {
-    [SerializeField] 
+    [SerializeField]
     private TKey sceneType;
-    [SerializeField] 
+    [SerializeField]
     private TValue sceneAsset;
 
     public TKey Key => sceneType;
@@ -31,27 +33,29 @@ public class SerializableDictionary<TKey, TValue>
 
 public class MySceneManager : MonoBehaviour
 {
-    private static MySceneManager Instance;
+    // 市原追記
+    public static MySceneManager Instance { get => _instance; }
+    private static MySceneManager _instance;
 
-    [SerializeField,Header("SceneのタイプとSceneの指定※BuildSetting必須")]
-    private SerializableDictionary<SceneType, SceneAsset>[] _loadSceneKeyPair;
+    [SerializeField, Header("SceneのタイプとSceneの指定※BuildSetting必須")]
+    private SerializableDictionary<SceneType, string>[] _loadSceneKeyPair;
 
     private Dictionary<SceneType, string> _loadScenes = new Dictionary<SceneType, string>();
 
-    private bool _settingScene=false;
+    private bool _settingScene = false;
 
     private void Awake()
     {
-        if (Instance == null)
+        if (_instance == null)
         {
-            Instance = this;
+            _instance = this;
             DontDestroyOnLoad(this.gameObject);
             if (!_settingScene)
             {
                 // _loadSceneKeyPairの配列の数だけ_loadScenesに
                 for (int i = 0; i < _loadSceneKeyPair.Length; i++)
                 {
-                    _loadScenes.Add(_loadSceneKeyPair[i].Key, _loadSceneKeyPair[i].Value.name);
+                    _loadScenes.Add(_loadSceneKeyPair[i].Key, _loadSceneKeyPair[i].Value);
                 }
                 _settingScene = true;
             }
@@ -65,6 +69,7 @@ public class MySceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         //Test用
         if(Input.GetKeyDown(KeyCode.A))
         { ChangeScene(SceneType.Title); }
@@ -72,6 +77,7 @@ public class MySceneManager : MonoBehaviour
         { ChangeScene(SceneType.GameScene); }
         if (Input.GetKeyDown(KeyCode.D))
         { ChangeScene(SceneType.EndScene); }
+        */
 
     }
 
@@ -79,7 +85,9 @@ public class MySceneManager : MonoBehaviour
     /// シーン移動するようの関数
     /// </summary>
     /// <param name="sceneType">シーンのタイプ</param>
-    private void ChangeScene(SceneType sceneType)
+    //private void ChangeScene(SceneType sceneType)
+    // 市原追記
+    public void ChangeScene(SceneType sceneType)
     {
         if (_loadScenes[sceneType] != SceneManager.GetActiveScene().name)
         {

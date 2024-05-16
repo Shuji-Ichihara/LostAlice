@@ -40,6 +40,9 @@ public class Book : MonoBehaviour
     private bool _doBook_OpenAnimation = false;
     private bool _doBook_CloseAnimation = false;
 
+    // 市原追記
+    private GameObject _obj = null;
+
     void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -74,7 +77,7 @@ public class Book : MonoBehaviour
                         if (info.IsName("Base Layer.Book_OpenDefault"))
                         {
                             _doBook_OpenDefaultAnimation = false;
-                        }                        
+                        }
                         if (info.IsName("Base Layer.Book_NextPageInit"))
                         {
                             _doBook_NextPageInitAnimation = false;
@@ -111,11 +114,15 @@ public class Book : MonoBehaviour
         }
 
         await AnimationWaitOpenDefault();
-        
+
         _animator.SetTrigger(_nextInit);
         for (int i = 0; i < _pages.Length; i++)
         {
             _pages[i].SetActive(i == _pageIndex);
+
+            // 市原追記
+            if (_pages[i].activeSelf == true)
+                _obj = _pages[i];
         }
 
         await UniTask.Yield();
@@ -150,6 +157,11 @@ public class Book : MonoBehaviour
 
         _animator.SetTrigger(_nextEnd);
         _animator.SetBool(_waitOpenDefault, true);
+
+        // 市原追記
+        var goal = _obj.GetComponentInChildren<GoalZone>();
+        goal.RotateGoalZone().Forget();
+
         await AnimationWaitNextPageEnd();
 
         foreach (var page in _pages)

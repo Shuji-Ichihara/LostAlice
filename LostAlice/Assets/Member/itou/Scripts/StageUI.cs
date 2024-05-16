@@ -9,9 +9,6 @@ public class StageUI : MonoBehaviour
     private Text _nowStage;
     [SerializeField]
     private Text _WallTime;
-    // 市原追記
-    [SerializeField]
-    private Book bookScript = null;
     private int _stageCount;
     public bool _goal;
     public bool _times;
@@ -20,14 +17,17 @@ public class StageUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         _time = _maxtime;
         _stageCount++;
         _nowStage.text = "第" + _stageCount + "ステージ";
+        */
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.M))
         {
             _goal = true;
@@ -41,9 +41,10 @@ public class StageUI : MonoBehaviour
             _goal = false;
             _stageCount++;
             _nowStage.text = "第" + _stageCount + "ステージ";
-        }
-        
-        if (_times/*本来は壁が止まった判定*/)
+        }        
+        */
+        /*         
+        if (_times/*本来は壁が止まった判定)
         {
             _time -= Time.deltaTime;
             _WallTime.text = "" + _time.ToString("f0");
@@ -53,10 +54,12 @@ public class StageUI : MonoBehaviour
                 _time = 0f;
                 _WallTime.text = "" + _time;
                 /*本来は壁が止まった判定をfalse*/
-            _time = _maxtime;
-                /*壁が動き出す判定をture*/
-            }
-        }
-
+        //_time = _maxtime;
+        /*壁が動き出す判定をture*//*
+    }
+}
+*/
+        // 市原追記
+        _nowStage.text = $"{GameSceneManager.Instance.GameStageCount + 1} / {GameSceneManager.Instance.GameStageMax}";
     }
 }
